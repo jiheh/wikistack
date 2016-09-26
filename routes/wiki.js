@@ -18,16 +18,15 @@ router.post('/', function(req, res, next) {
   var page = Page.build({
 
     title : req.body.title,
-    urlTitle: urlMaker(req.body.title),
     content : req.body.content,
     status : req.body.status,
 
   });
 
 
-
-
   page.save();
+
+  res.json(page);
 });
 
 router.get('/add', function(req, res, next) {
@@ -36,13 +35,3 @@ router.get('/add', function(req, res, next) {
 
 
 module.exports = router;
-
-
-///
-
-function urlMaker(str){
-
-  return str.trim().toLowerCase().split(' ').join('-');
-
-
-}

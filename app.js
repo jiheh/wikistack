@@ -23,7 +23,10 @@ app.use(express.static('public'));
 
 models.User.sync({})
 .then(function () {
-    return models.Page.sync({});
+    return models.Page.sync();
+    // {force: true}
+    // force:true deletes old table and creates new table with fields needed
+    // BUT  ALL DATA WILL BE DELETED! (useful only when testing table)
 })
 .then(function(){
   //console.log("text 12");
