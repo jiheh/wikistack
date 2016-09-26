@@ -3,7 +3,6 @@ var db = new Sequelize('postgres://localhost:5432/wikistack', {
 	logging: false
 });
 
-
 var Page = db.define('page', {
     title: {
         type: Sequelize.STRING,
@@ -11,11 +10,7 @@ var Page = db.define('page', {
     },
     urlTitle: {
         type: Sequelize.STRING,
-        allowNull: false,
-        get: function() {
-        	var route = '/wiki/' + this.getDataValue('urlTitle');
-        	return route;
-        }
+        allowNull: false
     },
     content: {
         type: Sequelize.TEXT,
@@ -27,6 +22,12 @@ var Page = db.define('page', {
     date: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
+    },
+    route: {
+    	type: Sequelize.VIRTUAL,
+    	get: function() {
+        	return '/wiki/' + this.getDataValue('urlTitle');
+        }
     }
 });
 
