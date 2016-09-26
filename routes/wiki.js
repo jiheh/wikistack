@@ -8,18 +8,16 @@ var router = express.Router();
 
 
 router.get('/', function(req,res,next){
-  console.log(' router');
-  res.res('got to GET /wiki/');
+  res.redirect('/');
 });
 
 router.post('/', function(req, res, next) {
-  res.send('got to POST /wiki/');
+  res.json(req.body);
 });
 
 router.get('/add', function(req, res, next) {
   res.render('addpage');
 });
-
 
 
 module.exports = router;
