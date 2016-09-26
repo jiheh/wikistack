@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var nunjucks = require('nunjucks');
-var routes = require('./routes/');
-var bodyParser = require('body-parser');
+var routes = require('./routes/wiki');
+var parser = require('body-parser');
 var models = require('./models');
 
 var env = nunjucks.configure('views', {noCache: true});
@@ -13,11 +13,21 @@ app.set('view engine', 'html');
 app.engine('html', nunjucks.render);
 
 
+app.use(parser.json());
+
+app.use(parser.urlencoded({ extended: false }));
+
+
+
 app.use(express.static('public'));
 
 models.User.sync({})
 .then(function () {
-    return models.Page.sync({})
+    return models.Page.sync({});
+})
+.then(function(){
+  //console.log("text 12");
+  app.use('/wiki', routes);
 })
 .then(function () {
     app.listen(3000, function () {

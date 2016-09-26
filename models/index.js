@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var db = new Sequelize('postgres://localhost:5432/wikistack', {
-	logging: false
+    logging: false
 });
 
 var Page = db.define('page', {
@@ -24,9 +24,9 @@ var Page = db.define('page', {
         defaultValue: Sequelize.NOW
     },
     route: {
-    	type: Sequelize.VIRTUAL,
-    	get: function() {
-        	return '/wiki/' + this.getDataValue('urlTitle');
+        type: Sequelize.VIRTUAL,
+        get: function() {
+            return '/wiki/' + this.getDataValue('urlTitle');
         }
     }
 });
@@ -44,6 +44,6 @@ var User = db.define('user', {
 });
 
 module.exports = {
-  Page: Page,
-  User: User
+    Page: Page,
+    User: User
 };
