@@ -24,14 +24,39 @@ router.post('/', function(req, res, next) {
   });
 
 
-  page.save();
+  page.save()
+  .then(function(savedPage){
+    res.redirect(savedPage.route);
+  })
+  .catch(next);
 
-  res.json(page);
+
 });
+
 
 router.get('/add', function(req, res, next) {
   res.render('addpage');
 });
+
+router.get('/:urlTitle', function(req,res,next){
+
+  Page.findOne({
+    where : {
+      urlTitle : req.params.urlTitle
+    }
+  })
+  .then(function(foundPage){
+    var pageDetails = foundPage.dataValues;
+
+    res.render('wikipage', pageDetails);
+   })
+  .catch(next);
+
+});
+
+
+
+
 
 
 module.exports = router;
